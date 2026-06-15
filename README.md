@@ -21,11 +21,11 @@
 
 ### 🏗 Tech Stack
 
-**Frontend:** React + TypeScript  
-**Auth:** Firebase Authentication (Google)  
-**Database:** Firebase Firestore  
-**Hosting:** Firebase Hosting  
-**Version Control:** GitHub  
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Firebase](https://img.shields.io/badge/Firebase-FFCA28?style=for-the-badge&logo=firebase&logoColor=black)
+![Firestore](https://img.shields.io/badge/Firestore-FF6F00?style=for-the-badge&logo=firebase&logoColor=white)
+![GitHub](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=github&logoColor=white)
 
 ---
 
