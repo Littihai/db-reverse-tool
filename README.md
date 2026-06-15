@@ -1,70 +1,57 @@
----
+# 🗄️ DB Reverse Engineering Tool
 
-## 🚀 Getting Started
+## 💻 SQL Server Database Explorer สำหรับสำรวจโครงสร้างฐานข้อมูล เพื่อเตรียมพัฒนาระบบใหม่, Data Migration และออกแบบ API
 
-### Prerequisites
-- Node.js v18+
-- Firebase CLI
-- Google Account
-
-### Installation
-
-```bash
-# Clone repository
-git clone https://github.com/YOUR_USERNAME/db-reverse-tool.git
-cd db-reverse-tool
-
-# Install dependencies
-npm install
-
-# Start development server
-npm start
-```
-
-### Firebase Setup
-
-1. สร้าง Firebase Project ที่ https://console.firebase.google.com
-2. เปิด **Authentication** → Sign-in method → Google
-3. เปิด **Firestore Database** → asia-southeast1
-4. เปิด **Hosting**
-5. Copy `firebaseConfig` ใส่ใน `src/firebase.ts`
-
-### Firestore Security Rules
-
-```javascript
-rules_version = '2';
-service cloud.firestore {
-  match /databases/{database}/documents {
-    match /queries/{queryId} {
-      allow read: if request.auth != null &&
-        (resource.data.createdBy == request.auth.uid ||
-         resource.data.visibility == "public");
-
-      allow create: if request.auth != null &&
-        request.resource.data.createdBy == request.auth.uid;
-
-      allow update, delete: if request.auth != null &&
-        resource.data.createdBy == request.auth.uid;
-    }
-  }
-}
-```
+🔗 **Live:** https://db-reverse-engineering.web.app
 
 ---
 
-## 📦 Deploy
+### 🚀 Features
 
-```bash
-# Build
-npm run build
+- 22 Built-in SQL Queries พร้อมใช้งานทันที
+- Custom Query — เพิ่ม/แก้ไข/ลบ query ของตัวเองได้
+- Private / Public — กำหนดการมองเห็นได้
+- Search & Filter — ค้นหาและกรองตามหมวดหมู่
+- Checklist — ติดตาม progress ก่อนสร้างระบบใหม่
+- Module Mapping — ตารางความสัมพันธ์ Module กับ Tables
+- Copy Query — คัดลอก SQL ได้ทันที
+- Google Login — เข้าใช้งานด้วย Google Account
 
-# Deploy to Firebase Hosting
-firebase deploy
+---
+
+### 🏗 Tech Stack
+
+**Frontend:** React + TypeScript  
+**Auth:** Firebase Authentication (Google)  
+**Database:** Firebase Firestore  
+**Hosting:** Firebase Hosting  
+**Version Control:** GitHub  
+
+---
+
+### 📁 Project Structure
+
+```
+src/
+├── components/
+│   ├── SqlCard.tsx            # การ์ด SQL query
+│   ├── Checklist.tsx          # Checklist ก่อนสร้างระบบ
+│   ├── ModuleMapping.tsx      # ตาราง Module Mapping
+│   └── CustomQueryModal.tsx   # Modal เพิ่ม/แก้ไข query
+├── pages/
+│   ├── LoginPage.tsx          # หน้า Login
+│   └── Dashboard.tsx          # หน้าหลัก
+├── hooks/
+│   └── useCustomQueries.ts    # Firestore hook
+├── types/
+│   └── query.ts               # TypeScript interfaces
+├── firebase.ts                # Firebase config
+└── App.tsx                    # Router
 ```
 
 ---
 
-## 📋 SQL Query Categories
+### 📋 SQL Query Categories
 
 | หมวดหมู่ | รายการ |
 |---|---|
@@ -75,41 +62,52 @@ firebase deploy
 
 ---
 
-## ✅ Checklist ก่อนสร้างระบบใหม่
-
-- **Database Structure** — Tables, Columns, Data Types, Keys, Indexes
-- **Business Logic** — Views, Stored Procedures, Functions, Triggers  
-- **Data Analysis** — Row Count, Table Size, Sample Data
-- **Security** — Users, Roles, Permissions
-- **Migration** — ER Diagram, Data Dictionary, Module Mapping, API Mapping
-
----
-
-## 🗂️ Module Mapping
-
-| Module | Tables |
-|---|---|
-| RFQ | RFQ_Header, RFQ_Detail |
-| PR | PR_Header, PR_Detail |
-| PO | PO_Header, PO_Detail |
-| Vendor | vendor_information |
-| Customer | customer_information |
-| Employee | employee_information |
-| User | users_information |
-| Approval | approval_workflow |
-| Email | email_log |
-| Audit | audit_log |
-
----
-
-## 🔐 Access Control
+### 🔐 Access Control
 
 | ประเภท | การมองเห็น |
 |---|---|
 | Built-in Queries | ทุกคนที่ login เห็นได้ |
-| Custom Private | เห็นเฉพาะเจ้าของ |
-| Custom Public | ทุกคนที่ login เห็นได้ |
+| Custom Private 🔒 | เห็นเฉพาะเจ้าของ |
+| Custom Public 🌐 | ทุกคนที่ login เห็นได้ |
 
 ---
 
-## 📊 Firestore Data Structure
+### 📊 Firestore Data Structure
+
+```
+queries (collection)
+└── {documentId}
+    ├── title:         string
+    ├── sql:           string
+    ├── category:      string
+    ├── visibility:    "private" | "public"
+    ├── createdBy:     string (uid)
+    ├── createdByName: string
+    └── createdAt:     timestamp
+```
+
+---
+
+### ⚡ Getting Started
+
+```bash
+# Clone repository
+git clone https://github.com/Littihai/db-reverse-tool.git
+cd db-reverse-tool
+
+# Install dependencies
+npm install
+
+# Start development
+npm start
+
+# Deploy
+npm run build
+firebase deploy
+```
+
+---
+
+### 📫 Contact
+
+littichai_y@ts-engineering.com
