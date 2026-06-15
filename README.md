@@ -2,7 +2,7 @@
 
 ## 💻 SQL Server Database Explorer สำหรับสำรวจโครงสร้างฐานข้อมูล เพื่อเตรียมพัฒนาระบบใหม่, Data Migration และออกแบบ API
 
-🔗 **Live:** https://db-reverse-engineering.web.app/
+🔗 **Live:** https://db-reverse-engineering.web.app
 
 ---
 
