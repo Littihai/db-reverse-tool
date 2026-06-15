@@ -3,11 +3,10 @@ import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 import SqlCard from "../components/SqlCard";
-import Checklist from "../components/Checklist";
-import ModuleMapping from "../components/ModuleMapping";
 import CustomQueryModal from "../components/CustomQueryModal";
 import { useCustomQueries } from "../hooks/useCustomQueries";
 import { CustomQuery } from "../types/query";
+import PreBuildGuide from "../components/PreBuildGuide";
 
 const BUILT_IN_QUERIES = [
   { id: 1,  title: "1. ดูรายการ Table ทั้งหมด",           category: "Structure",       sql: `SELECT\n    TABLE_SCHEMA,\n    TABLE_NAME\nFROM INFORMATION_SCHEMA.TABLES\nWHERE TABLE_TYPE = 'BASE TABLE'\nORDER BY TABLE_NAME;` },
@@ -35,7 +34,7 @@ const BUILT_IN_QUERIES = [
 ];
 
 const categories = ["ทั้งหมด", "Structure", "Business Logic", "Data", "Security", "Custom"];
-type Tab = "queries" | "checklist" | "mapping";
+type Tab = "queries" | "checklist";
 
 const Dashboard: React.FC = () => {
   const navigate = useNavigate();
@@ -95,7 +94,7 @@ const Dashboard: React.FC = () => {
 
       {/* Tabs */}
       <div style={s.tabBar}>
-        {([["queries","📋 SQL Queries"],["checklist","✅ Checklist"],["mapping","🗂️ Module Mapping"]] as [Tab,string][]).map(([key,label]) => (
+        {([["queries","📋 SQL Queries"],["checklist","📖 Pre-Build Guide"]] as [Tab,string][]).map(([key,label]) => (
           <button key={key} style={{ ...s.tab, ...(tab === key ? s.tabActive : {}) }} onClick={() => setTab(key)}>
             {label}
           </button>
@@ -196,8 +195,7 @@ const Dashboard: React.FC = () => {
         </div>
       )}
 
-      {tab === "checklist" && <Checklist />}
-      {tab === "mapping"   && <ModuleMapping />}
+      {tab === "checklist" && <PreBuildGuide />}
 
       {showModal && (
         <CustomQueryModal

@@ -6,16 +6,16 @@
 
 ---
 
-### 🚀 Features
+### ✨ Features
 
-- 22 Built-in SQL Queries พร้อมใช้งานทันที
-- Custom Query — เพิ่ม/แก้ไข/ลบ query ของตัวเองได้
-- Private / Public — กำหนดการมองเห็นได้
-- Search & Filter — ค้นหาและกรองตามหมวดหมู่
-- Checklist — ติดตาม progress ก่อนสร้างระบบใหม่
-- Module Mapping — ตารางความสัมพันธ์ Module กับ Tables
-- Copy Query — คัดลอก SQL ได้ทันที
-- Google Login — เข้าใช้งานด้วย Google Account
+- 📋 22 Built-in SQL Queries พร้อมใช้งานทันที
+- ➕ Custom Query — เพิ่ม/แก้ไข/ลบ query ของตัวเองได้
+- 🔒 Private / Public — กำหนดการมองเห็นต่อ user อื่นได้
+- 🔍 Search & Filter — ค้นหาและกรองตามหมวดหมู่
+- 📖 Pre-Build Guide — คู่มือสิ่งที่ควรมีก่อนสร้างระบบใหม่
+- 📋 Copy Query — คัดลอก SQL ได้ทันที
+- ☁️ Real-time Sync — ข้อมูล sync ข้ามเครื่องผ่าน Firestore
+- 🔐 Google Login — เข้าใช้งานด้วย Google Account
 
 ---
 
@@ -35,14 +35,13 @@
 src/
 ├── components/
 │   ├── SqlCard.tsx            # การ์ด SQL query
-│   ├── Checklist.tsx          # Checklist ก่อนสร้างระบบ
-│   ├── ModuleMapping.tsx      # ตาราง Module Mapping
+│   ├── PreBuildGuide.tsx      # คู่มือก่อนสร้างระบบ
 │   └── CustomQueryModal.tsx   # Modal เพิ่ม/แก้ไข query
 ├── pages/
 │   ├── LoginPage.tsx          # หน้า Login
 │   └── Dashboard.tsx          # หน้าหลัก
 ├── hooks/
-│   └── useCustomQueries.ts    # Firestore hook
+│   └── useCustomQueries.ts    # Firestore hook + Optimistic Update
 ├── types/
 │   └── query.ts               # TypeScript interfaces
 ├── firebase.ts                # Firebase config
@@ -101,9 +100,30 @@ npm install
 # Start development
 npm start
 
-# Deploy
+# Build & Deploy
 npm run build
 firebase deploy
+```
+
+---
+
+### 🔒 Firestore Security Rules
+
+```javascript
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /queries/{queryId} {
+      allow read: if request.auth != null &&
+        (resource.data.createdBy == request.auth.uid ||
+         resource.data.visibility == "public");
+      allow create: if request.auth != null &&
+        request.resource.data.createdBy == request.auth.uid;
+      allow update, delete: if request.auth != null &&
+        resource.data.createdBy == request.auth.uid;
+    }
+  }
+}
 ```
 
 ---
